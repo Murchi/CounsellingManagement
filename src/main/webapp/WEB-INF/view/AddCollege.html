@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script>
+
+window.onload= function checkSession() {
+	if(performance.navigation.type == 2){
+		   location.reload(true);
+		}
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	//myObj = JSON.parse(this.responseText);
+	      //document.getElementById("demo").innerHTML =this.responseText;
+	      console.log(this.responseText);
+	      if(this.responseText==100) {
+	    	 //alert("Invalid Session");
+	    	  window.location.href = "index.html";
+	    	  console.log(this.response.length);
+	      }
+	      
+	    }
+	    
+	    		
+		  };
+	  xhttp.open("GET", "/checkadminsession", true);
+	  xhttp.send();
+}
+
+</script>
+
+
+<div id ="selectcourse"></div>
+<script>
+function loadDoc(collegeid,collegename) {
+  var xhttp = new XMLHttpRequest();
+  //console.log(id,password);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //document.getElementById("demo").innerHTML = this.responseText;
+      var response = this.responseText;
+      console.log(response);
+      //alert("College Added Successfully");
+     // window.location.href = "college.html";
+      window.location.href = "AddCourse.html";
+      
+    }
+  };
+  xhttp.open("POST", "/addcollege", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("collegeid="+collegeid+"&collegename="+collegename);
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+  alert("Adding College");
+}
+</script>
+
+
+
+<script>
+function loadCourse(courseid,coursename) {
+  var xhttp = new XMLHttpRequest();
+  //console.log(id,password);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //document.getElementById("demo").innerHTML = this.responseText;
+      var response = this.responseText;
+      console.log(response);
+     // window.location.href = "college.html";
+     //alert("Course added successfully"); 
+     window.location.href = "AddCollege.html";
+     
+    }
+  };
+  xhttp.open("POST", "/addcourse", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("courseid="+courseid+"&coursename="+coursename);
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+  alert("Adding Course");
+}
+</script>
+
+
+<script>
+function loadCollegeCourse(courseid,collegeid,total_seats,available_seats) {
+  var xhttp = new XMLHttpRequest();
+  //console.log(id,password);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //document.getElementById("demo").innerHTML = this.responseText;
+      var response = this.responseText;
+      console.log(response);
+     // window.location.href = "college.html";
+    // alert("Course added successfully"); 
+     window.location.href = "AddCollege.html";
+     
+    }
+  };
+  xhttp.open("POST", "/addcollegecourse", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("collegeid="+collegeid+"&courseid="+courseid+"&total_seats="+total_seats+"&avalable_seats="+available_seats);
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+  alert("Adding Course");
+}
+</script>
+
+
+
+<form  name="addCollege" onsubmit="return loadDoc(document.getElementById('collegeid').value,document.getElementById('collegename').value)" method="post">
+<input type ="text" id="collegeid">
+<input type = "text" id ="collegename">
+<button type="submit">Submit</button>
+</form>
+
+<form  name="addCourse" onsubmit="return loadCourse(document.getElementById('courseid').value,document.getElementById('coursename').value)" method="post">
+<input type ="text" id="courseid">
+<input type = "text" id ="coursename">
+<button type="submit">Submit</button>
+</form>
+
+<form  name="addCollegeCourse" onsubmit="return loadCollegeCourse(document.getElementById('courseid').value,document.getElementById('collegeid').value,document.getElementById('total_seats').value,document.getElementById('available_seats').value)" method="post">
+<input type ="text" id="total_seats">
+<input type = "text" id ="available_seats">
+<button type="submit">Submit</button>
+</form>
+
+
+</body>
+</html>

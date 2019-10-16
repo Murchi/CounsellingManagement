@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<title>Insert title here</title>
+
+ <link rel="stylesheet" type="text/css" href="DisplayCollegeToAdmin.css">
+
+</head>
+<body>
+
+<h3 align ="center">College Data</h3>
+<br>
+
+<script>
+
+
+window.onload= function checkSession() {
+	if(performance.navigation.type == 2){
+		   location.reload(true);
+		}
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	//myObj = JSON.parse(this.responseText);
+	      //document.getElementById("demo").innerHTML =this.responseText;
+	      console.log(this.responseText);
+	      if(this.responseText==100) {
+	    	 //alert("Invalid Session");
+	    	  window.location.href = "index.html";
+	    	  console.log(this.response.length);
+	      }
+	      
+	    }
+	    
+	    		
+		  };
+	  xhttp.open("GET", "/checkadminsession", true);
+	  xhttp.send();
+}
+
+</script>
+
+<div id ="demo"></div>
+<script>
+function loadCollege() {
+	var xhttp = new XMLHttpRequest();
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  xhttp.onreadystatechange = function() {
+		  
+	    if (this.readyState == 4 && this.status == 200) {
+	    	console.log("DATA CHANGe");
+	   //   document.getElementById("selectcourse").innerHTML = this.responseText;
+	     // alert("Course Chosen Successfully");
+	     
+	     console.log(this.responseText);
+	    	 myObj = JSON.parse(this.responseText);
+	    	 txt += "<table border='1' align='center'id='tblMain' class='table table-hover' style='cursor: pointer'>"
+	   	      txt+='<tr>'
+	   	      txt+='<td class="bg-primary">'+'<b>'+"Total Seats"+'</td>'
+	   	      txt+='<td  class="bg-primary">'+'<b>'+"Available Seats"+'</td>'
+	   	      txt+='<td  class="bg-primary">'+'<b>'+"College Id"+'</td>'
+	   	   txt+='<td  class="bg-primary">'+'<b>'+"College Name"+'</td>'
+	   	      txt+='<td  class="bg-primary">'+'<b>'+"Course Id"+'</td>'
+	   	   txt+='<td  class="bg-primary">'+'<b>'+"Course Name"+'</td>'
+	   	    //  txt+='<td>'+"Submit"+'</td>'	    	    	    	      
+	   	      var count =0;
+	   	      for (x in myObj) {
+	   	    	  txt+='<tr>'
+	   	    	  for(y in myObj[x]) {
+	   	    		  count++;
+	   	    		  if(count!=1) {
+	   	    			  if(count ==4 || count ==5) {
+	   	    				for(z in myObj[x][y]) {
+			    				
+			    				
+			    				txt += "<td>" + myObj[x][y][z] + "</td>";
+	   	    				}
+	   	    			  }
+	   	    			  else {
+	   	    
+	   	        txt += "<td>" + myObj[x][y] + "</td>";
+	   	    			  }
+	   	    		  }   	
+	   	    	  }
+	   	    	  count =0;
+	   	    	 
+	   	    	  txt+='</tr>'
+	   	      }
+	   	      txt += "</table>" 
+		    	  document.getElementById("demo").innerHTML = txt;
+	      
+	    }
+	  };
+	 
+	//var url = "studentinfo"+"/"+name;
+		  xhttp.open("GET", "/showcollegedata", true);
+	  xhttp.send();
+}
+</script>
+
+
+
+<script>
+loadCollege();
+</script>
+
+<div class="wrapper">
+    <button class="button" onclick ="location.href='AdminLoginSuccessfull.html'">Back</button>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<title>Insert title here</title>
+ <link rel="stylesheet" type="text/css" href="DisplayCollege.css">
+</head>
+<body>
+
+
+<h3 align ="center">College Data</h3>
+
+<script>
+window.onload=function redirectTostudentLogin() {
+	if(sessionStorage.getItem("sessionstore")!=1) {
+		window.location.href = "index.html";
+	}
+	else if(sessionStorage.getItem("studentstore")!=2) {
+		window.location.href="StudentLogin.html";
+	}
+	
+}
+
+</script>
+
+<script>
+function logout() {
+	var xhttp = new XMLHttpRequest();
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  xhttp.onreadystatechange = function() {
+		  
+	    if (this.readyState == 4 && this.status == 200) {
+	    	alert("logging out");
+	    	window.location.href="index.html"
+	    }
+	  };
+	  xhttp.open("GET", "/logout", true);
+	  xhttp.send();
+}
+</script>
+
+
+<ul>
+  <li><a class="active" href="DisplayCollege.html">Select College</a></li>
+  <li><a href="student.html">Profile</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#"onclick=logout();>Logout</a></li>
+</ul>
+
+<br>
+
+
+
+<div id ="demo"></div>
+<p id="showData"></p>
+
+<script>
+window.onload=function loadDoc() {
+	if(performance.navigation.type == 2){
+		   location.reload(true);
+		}
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	//myObj = JSON.parse(this.responseText);
+	      //document.getElementById("demo").innerHTML =this.responseText;
+	      if(this.response.length==0) {
+	    	 // alert("Invalid Session");
+	    	  window.location.href = "index.html";
+	    	  console.log(this.response.length);
+	      }
+	      else {
+	    	  
+	      var myTable = this.responseText;
+	      
+	      myObj = JSON.parse(this.responseText);
+	      txt += "<table border='1' align='center'id='tblMain' class='table table-hover' style='cursor: pointer'>"
+	      txt+='<tr>'
+	      txt+='<td class="bg-primary">'+'<b>'+"COLLEGE ID"+'</td>'
+	      txt+='<td  class="bg-primary">'+'<b>'+"COLLEGE NAME"+'</td>'
+	      txt+='<td  class="bg-primary">'+'<b>'+"COURSE ID"+'</td>'
+	   	  txt+='<td  class="bg-primary">'+'<b>'+"COURSE NAME"+'</td>'
+	      txt+='<td  class="bg-primary">'+'<b>'+"TOTAL SEATS"+'</td>'
+	      txt+='<td  class="bg-primary">'+'<b>'+"AVAILABLE SEATS"+'</td>'
+	    //  txt+='<td>'+"Submit"+'</td>'	    	    	    	      
+	      
+	      for (x in myObj) {
+	    	  txt+='<tr>'
+	    	  for(y in myObj[x]) {
+	        txt += "<td>" + myObj[x][y] + "</td>";
+	       	
+	    	  }
+	    	 
+	    	  txt+='</tr>'
+	      }
+	      txt += "</table>" 
+	      
+	      document.getElementById("demo").innerHTML = txt;
+	      var tbl = document.getElementById("tblMain");
+	      if (tbl != null) {
+	            for (var i = 0; i < tbl.rows.length; i++) {
+	                for (var j = 0; j < tbl.rows[i].cells.length; j++)
+	                    tbl.rows[i].cells[2].onclick = function () { getval(this); };
+	            }
+	        }
+	      
+	      
+	        function getval(cel) {
+	           //alert(cel.innerHTML);
+	        	document.getElementById("id").value = cel.innerHTML;
+	        }
+	      
+	      }
+	      
+	    }
+	    
+	    		
+		  };
+	  xhttp.open("GET", "/display", true);
+	  xhttp.send();
+}
+
+</script>
+
+
+
+<div id ="selectcourse"></div>
+<script>
+function loadCourse(courseid) {
+	var name = localStorage.getItem("studentname");
+	var count =  localStorage.getItem("count");
+	//console.log(count);
+	
+	//console.log(response);
+	
+	
+  var xhttp = new XMLHttpRequest();
+  
+  
+  
+  
+  xhttp.onreadystatechange = function() {
+	  
+    if (this.readyState == 4 && this.status == 200) {
+    	
+    	var response = this.responseText;
+    	console.log(response);
+    	
+    	if(response == 100) {
+  		  alert("already chosen course");
+  		  //localStorage.removeItem(count);
+  		  window.location.href = "DisplayCollege.html";
+  		  
+  	  }
+    	
+   //   document.getElementById("selectcourse").innerHTML = this.responseText;
+     // alert("Course Chosen Successfully");
+      //localStorage.setItem("studentid",id);
+     
+      else {
+      
+      //***check if the student has already selected*****//
+      
+      if(response == 102 ) {
+    	  alert("faled saving data!! Try Again")
+    	  window.location.href = "DisplayCollege.html";
+      }
+      else if(response ==600) {
+    	  alert("Invalid Session");
+    	  window.location.href ="index.html";
+      }
+      else {
+      window.location.href = "student.html";
+      }
+    }
+    }
+  };
+ 
+// var url = "choosecollege"+"/"+id+"/"+courseid;
+ var url = "choosecollege"+"/"+courseid;
+	  xhttp.open("GET", url, true);
+  xhttp.send();
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+ // alert("Saving Data");
+	}
+ 
+
+</script>
+
+
+
+
+<!-- <script type="text/javascript">
+window.onload=loadDoc();
+</script>
+ -->
+
+<div class="wrapper">
+Courseid:<input type="text" id="id" disabled>
+<!-- Studentid:<input type="number" id="name"> -->
+<input type="submit" value="Submit" onClick ="loadCourse(document.getElementById('id').value)">
+ <button class="button" onclick ="location.href='SelectCollege.html'">Back</button>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

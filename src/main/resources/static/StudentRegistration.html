@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="StudentLogin.css">
+</head>
+<body>
+
+<script>
+function loadDocStudent(name,marks,studentid,password) {
+	
+console.log(studentid);
+  var xhttp = new XMLHttpRequest();
+ // xhttp.timeout = 10000;
+  
+  //xhttp.onreadystatechange = function() {
+	  xhttp.onload=function() {
+    if (this.readyState == 4 && this.status == 200) {
+    
+     //document.getElementById("demo1").innerHTML = this.responseText;
+    localStorage.setItem("studentname",studentid);
+    
+   // alert("Data Saved Successfully");
+    window.location.href = "index.html";
+      var response = this.responseText;
+      console.log(response);
+      
+    	 
+    		/* if(response == 101) {
+    		window.location.href = "SelectCollege.html";
+    		}
+    	
+    		else if(response==100){ 
+    			alert("Not Registered");
+    			 window.location.href = "StudentLogin.html";
+    		}
+    		else {
+    		 alert("Wrong id or password!! Please try Again");
+    		 window.location.href = "StudentLogin.html";
+    		} */
+    }
+    
+		
+  };
+  xhttp.open("POST", "/studentinfo", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("name="+name+"&marks="+marks+"&studentid="+studentid+"&password="+password);
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+  alert("Saving Data");
+}
+  
+  
+  
+  
+  
+  
+</script>
+
+
+<script>
+window.onload=function redirectTostudentLogin() {
+	if(sessionStorage.getItem("sessionstore")!=1) {
+		window.location.href = "index.html";
+	}
+	
+}
+
+</script>
+
+
+
+<!-- <script>
+var count;
+count++;
+localStorage.setItem("count",count);
+</script> -->
+
+
+<h2 align="center">Student Registration</h2>
+
+<form  name="studentLogin" onsubmit="return loadDocStudent(document.getElementById('name').value, document.getElementById('marks').value, document.getElementById('studentid').value,document.getElementById('password').value)" method="post">
+  <!-- <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div>
+ -->
+  <div class="container">
+    <label for="uname"><b>Name</b></label>
+    <br>
+    <input type="text" placeholder="Enter Name" name="uname" id ="name" required>
+	<br>
+	<label for="umark"><b>Mark</b></label>
+    <br>
+    <input type="text" placeholder="Enter Mark" name="umaek" id ="marks" required>
+	<br>
+	<label for="uid"><b>Username</b></label>
+    <br>
+    <input type="text" placeholder="Enter StudentId" name="ustdudentid" id ="studentid" required>
+	<br>
+    <label for="psw"><b>Password</b></label>
+    <br>
+    <input type="password" placeholder="Enter Password" name="psw" id="password" required>
+        
+    <button type="submit">Submit</button>
+    <br>
+    <label> 
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn" onclick ="location.href='index.html'">Cancel</button>
+   <!--  <span class="psw">Forgot <a href="#">password?</a></span> -->
+  </div>
+  
+</form>
+
+<script>
+//loadPage();
+</script>
+</body>
+</html>

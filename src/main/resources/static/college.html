@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<script>
+window.onload=function redirectTostudentLogin() {
+	if(sessionStorage.getItem("sessionstore")!=1) {
+		window.location.href = "index.html";
+	}
+	
+}
+
+</script>
+	
+<div id ="demo"></div>	
+	<script>
+function loadDoc() {
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	//myObj = JSON.parse(this.responseText);
+	      //document.getElementById("demo").innerHTML =this.responseText;
+	      var myTable = this.responseText;
+	      
+	      myObj = JSON.parse(this.responseText);
+	      txt += "<table border='1' align='center'id='tblMain' class='table table-hover' style='cursor: pointer'>"
+	      txt+='<tr>'
+	      txt+='<td class="bg-primary">'+'<b>'+"COLLEGE ID"+'</td>'
+	      txt+='<td  class="bg-primary">'+'<b>'+"COLLEGE NAME"+'</td>'
+	    //  txt+='<td>'+"Submit"+'</td>'	    	    	    	      
+	      
+	      for (x in myObj) {
+	    	  txt+='<tr>'
+	    	 
+	        txt += "<td>" + myObj[x] + "</td>";
+	       	
+	    	  
+	    	 
+	    	//  txt+='</tr>'
+	      }
+	      txt += "</table>" 
+	      
+	     /*  document.getElementById("demo").innerHTML = txt;
+	      var tbl = document.getElementById("tblMain");
+	      if (tbl != null) {
+	            for (var i = 0; i < tbl.rows.length; i++) {
+	                for (var j = 0; j < tbl.rows[i].cells.length; j++)
+	                    tbl.rows[i].cells[2].onclick = function () { getval(this); };
+	            }
+	        }
+	      
+	      
+	        function getval(cel) {
+	           //alert(cel.innerHTML);
+	        	document.getElementById("id").value = cel.innerHTML;
+	        } */
+	      
+	      
+	      
+	    }
+	    		
+		  };
+	  xhttp.open("GET", "/listofcolleges", true);
+	  xhttp.send();
+}
+
+</script>
+	
+	
+	<script type="text/javascript">loadDoc();</script>
+	
+</body>
+</html>

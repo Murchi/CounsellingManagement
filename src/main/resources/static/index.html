@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<link  rel="stylesheet" type="text/css" href="Index.css">
+<meta charset="utf-8">
+<meta name="Homepage" content="HomePage">
+<title> Counselling HomePage</title>
+</head>
+
+<body>
+<script>
+function saveSessionforStudent() {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem('sessionstore','1');
+   // alert('data added in session storage');
+    window.location.href = "StudentLogin.html";
+  } else {
+    alert('session storage not supported');
+  }
+}
+</script>
+
+<script>
+function saveSessionforAdmin() {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem('sessionstore','1');
+   // alert('data added in session storage');
+    window.location.href = "AdminLogin.html";
+  } else {
+    alert('session storage not supported');
+  }
+}
+</script>
+
+
+<script>
+function saveSessionforStudentRegistration() {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem('sessionstore','1');
+   // alert('data added in session storage');
+    window.location.href = "StudentRegistration.html";
+  } else {
+    alert('session storage not supported');
+  }
+}
+</script>
+
+
+
+
+<div class="bg-image"></div>
+<br>
+<br>
+ <img src="AMC_logo_richer_image.jpeg" alt="uni logo" style="width:100px;height:100px">
+ <h1 align ="center">Welcome to Counselling for year 2019</h1>
+<div class="bg-text">
+<br>
+ <button class =button type="button home-button" id="button1" onclick ="return saveSessionforAdmin()">Admin Login</button>
+ <button  class = button type="button contact-button" id="button2" onclick ="return saveSessionforStudent()">Student Login</button>
+ <button class =button type="button contact-button" id="button3" onclick ="return saveSessionforStudentRegistration()">Student Registration</button>
+ </div>
+ </body>
+ </html>

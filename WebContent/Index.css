@@ -1,0 +1,62 @@
+@charset "ISO-8859-1";
+
+body {
+ 
+  background-image: url("23bg_16.jpg");
+  
+}
+
+.bg-text {
+ 
+  
+  color: white;
+  font-weight: bold;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+#button1{
+width: 400px;
+height: 70px;
+
+}
+#button2{
+width: 400px;
+height: 70px;
+}
+
+#button3{
+width: 400px;
+height: 70px;
+}
+.wrapper {
+    text-align: center;
+}
+
+.button {
+  
+  background-color:#800000;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+img {
+	border-radius: 2px;
+	display: block;
+	margin-left: auto;
+  margin-right: auto;
+}

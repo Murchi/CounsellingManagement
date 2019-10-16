@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Combined</title>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="StudentLogin.css">
+  </head>
+  <body>
+    <div id="page1">
+     <script>
+function loadDocStudent(studentid,password) {
+	
+	
+	
+	
+	
+
+	sessionStorage.setItem('studentstore','2');
+//if(sessionStorage.getItem("sessionstore")==1)
+	
+//console.log(id);
+  var xhttp = new XMLHttpRequest();
+ // xhttp.timeout = 10000;
+  
+  //xhttp.onreadystatechange = function() {
+	  xhttp.onload=function() {
+    if (this.readyState == 4 && this.status == 200) {
+    
+     //document.getElementById("demo1").innerHTML = this.responseText;
+    localStorage.setItem("studentname",studentid);
+    
+    
+      var response = this.responseText;
+      console.log(response);
+    	 
+    		 /* if(response == 101) {
+    			
+    			//window.open( '_blank');
+    		window.location.href = "SelectCollege.html";
+    		//window.open("SelectCollege.html");
+    		} 
+    	
+    		else if(response==100){ 
+    			alert("Not Registered");
+    			 window.location.href = "StudentRegistration.html";
+    		
+    		}
+    		else {
+    		 alert("Wrong id or password!! Please try Again");
+    		 window.location.href = "index.html";
+    		} */
+    }
+    
+		
+  };
+  xhttp.open("POST", "/index/studentlogins", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("studentid="+studentid+"&password="+password);
+  var headers = xhttp.getAllResponseHeaders().toLowerCase();
+  alert("Logging you in");
+}
+  
+  
+  
+  
+  
+  
+</script>
+
+
+
+<!-- <script>
+function loadDocStudents(studentid, password) {
+var dataobj={"stduentid":studentid,"password": password};
+$.ajax({
+    method: "POST",
+    url: "http://localhost/index/studentlogins",
+    data: dataobj,
+    success: function(data){console.log(data);},
+   dataType: JSON.stringify(dataobj),
+   contentType : "application/json"
+});
+
+}
+</script> -->
+
+
+<!-- <script>
+var count;
+count++;
+localStorage.setItem("count",count);
+</script> -->
+
+
+<h2 align="center">Student Login</h2>
+
+<form  name="studentLogin" onsubmit="return loadDocStudent(document.getElementById('studentid').value, document.getElementById('password').value)" method="post">
+  <!-- <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div>
+ -->
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <br>
+    <input type="text" placeholder="Enter StudentId" name="studentid" id ="studentid" required>
+	<br>
+    <label for="psw"><b>Password</b></label>
+    <br>
+    <input type="password" placeholder="Enter Password" name="password" id="password" required>
+        
+    <button type="submit">Login</button>
+    <br>
+    <label> 
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn" onclick ="location.href='index.html'">Cancel</button>
+   <!--  <span class="psw">Forgot <a href="#">password?</a></span> -->
+  </div>
+  
+</form>
+     
+    </div>
+    <div id="page2">
+     
+     <script>
+/* window.onload=function redirectTostudentLogin() {
+	if(sessionStorage.getItem("sessionstore")!=1) {
+		window.location.href = "index.html";
+	}
+	
+} */
+
+</script>
+
+<script>
+function loadDoc(id,password) {
+	 var Admin = {
+	            id: id,
+	            password:password
+	        }
+  var xhttp = new XMLHttpRequest();
+  console.log(id,password);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //document.getElementById("demo").innerHTML = this.responseText;
+      var response = this.responseText;
+      console.log(response);
+      if(response == "Successfull")
+  		window.location.href = "AdminLoginSuccessfull.html";
+  		
+  		else {
+  		 alert("Wrong id or password!! Please try Again");
+  		 window.location.href = "AdminLogin.html"
+  		}
+    }
+  };
+  xhttp.open("POST", "/index/adminlogin", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(Admin);
+}
+</script>
+
+<script>
+function indentifyNode(id,password){
+	//alert("Test")
+//	var dataobj={"id":""+id+"","password": ""+password+""};
+		var dataobj={"adminid":id,"password": password};
+
+	console.log(dataobj);
+	//alert("test")
+	// {"id":id,"password": password}
+	$.ajax({
+	      type : "POST",
+	      cache : false,
+	      url : '/index/adminlogin',
+	      contentType: "application/json",
+	      data: JSON.stringify(dataobj),
+	      success: function (res) {
+	    alert(res)
+	      }
+	    });
+	}
+
+</script>
+
+
+
+<h2 align="center">Admin Login</h2>
+
+<form  name="adminLogin" onsubmit="return indentifyNode(document.getElementById('id').value,document.getElementById('password').value)">
+
+ <!--  <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div> -->
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <br>
+    <input type="text" placeholder="Enter Username" name="uname" id="id" required>
+	<br>
+    <label for="psw"><b>Password</b></label>
+    <br>
+    <input type="password" placeholder="Enter Password" name="psw" id="password" required>
+       <br> 
+    <button type="submit">Login</button>
+    <br>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn" onclick ="location.href='index.html'">Cancel</button>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div>
+</form>
+     
+     
+    </div>
+  </body>
+</html>

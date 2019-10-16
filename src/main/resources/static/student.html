@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<title>Insert title here</title>
+
+ <link rel="stylesheet" type="text/css" href="student.css">
+
+</head>
+<body>
+
+
+<!-- <script>
+window.onload=function redirectTostudentLogin() {
+	if(sessionStorage.getItem("sessionstore")!=1) {
+		window.location.href = "index.html";
+	}
+	
+}
+
+</script> -->
+
+
+
+
+
+<h3 align ="center">Student data</h3>
+<br>
+
+
+<div id ="demo"></div>
+
+<script>
+window.onload= function checkSession() {
+	/* if(performance.navigation.type == 2){
+		   location.reload(true);
+		} */
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	//myObj = JSON.parse(this.responseText);
+	      //document.getElementById("demo").innerHTML =this.responseText;
+	      console.log(this.responseText);
+	      if(this.responseText==100) {
+	    	 //alert("Invalid Session");
+	    	  window.location.href = "index.html";
+	    	  console.log(this.response.length);
+	      }
+	      else {
+	    	  var name = localStorage.getItem("studentname");
+	    	  console.log("NAME"+name);
+	    	  loadStudent(name);
+	      }
+	      
+	    }
+	    
+	    		
+		  };
+	  xhttp.open("GET", "/checksession", true);
+	  xhttp.send();
+}
+</script>
+
+
+
+<script>
+function loadStudent(name) {
+	var xhttp = new XMLHttpRequest();
+	var obj, dbParam, xmlhttp, myObj, x, txt = "";
+	  xhttp.onreadystatechange = function() {
+		  
+	    if (this.readyState == 4 && this.status == 200) {
+	    	console.log("DATA CHANGe");
+	   //   document.getElementById("selectcourse").innerHTML = this.responseText;
+	     // alert("Course Chosen Successfully");
+	     if(this.response.length==0) {
+	    	 alert("inavlid session");
+	    	 window.location.href = "index.html";
+	    	  console.log(this.response.length);
+	     }
+	     else {
+	     console.log(this.responseText);
+	    	 myObj = JSON.parse(this.responseText);
+		      txt += "<table border='1' align='center'id='tblMain' class='table table-hover' style='cursor: pointer'>"
+		      txt+='<tr>'
+		    	//txt+='<td class="bg-primary">'+"Id"+'</td>'
+		      txt+='<td class="bg-primary">'+"Studentid"+'</td>'
+		      txt+='<td class="bg-primary">'+"Name"+'</td>'
+		      txt+='<td class="bg-primary">'+"Marks"+'</td>'
+		   	  txt+='<td class="bg-primary">'+"Courseid"+'</td>'
+		      txt+='<td class="bg-primary">'+"Coursename"+'</td>'
+		      txt+='<td class="bg-primary">'+"Collegeid"+'</td>'
+		      txt+='<td class="bg-primary">'+"Collegename"+'</td>'
+		      txt+='<tr>'
+		      var count=0;
+		      for (x in myObj ) {
+		    	 
+		    	 count++;
+		    	 if(count !=5 && count !=1) {
+		    		 if(count == 6 || count == 7) {
+		    			 if(myObj[x]==null) {
+	    					 txt += "<td>" + "not chosen" + "</td>";
+	    					 txt += "<td>" + "not chosen" + "</td>";
+	    				 }
+		    			 else {
+		    			 for(y in myObj[x]) {
+		    				 
+		    				  
+		    			 txt += "<td>" + myObj[x][y] + "</td>";
+		    			 }
+		    			 }
+		    			 
+		    		 }
+		    		 
+		    		 else {
+		        txt += "<td>" + myObj[x] + "</td>";
+		    		 }
+		    	 }
+		    	 
+		     }
+		      //txt+='</tr>'
+		      txt += "</table>"
+		    	  document.getElementById("demo").innerHTML = txt;
+	      
+	    }
+	    }
+	  };
+	 
+	 var url = "studentinfo"+"/"+name;
+		  xhttp.open("GET", url, true);
+	  xhttp.send();
+}
+	
+</script>
+
+<div class="wrapper">
+    <button class="button" onclick ="location.href='SelectCollege.html'">Back</button>
+</div>
+
+
+
+<script>
+ //console.log((localStorage.getItem("studentid")));
+// window.onload = alert(localStorage.getItem("studentid"));
+ /* var name = localStorage.getItem("studentname");
+ console.log("NAME"+name);
+ loadStudent(name); */
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
